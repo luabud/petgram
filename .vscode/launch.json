@@ -15,7 +15,8 @@
                 "--workers",
                 "1"
             ],
-            "jinja": true
+            "jinja": true,
+            "justMyCode": false
         }
     ]
 }

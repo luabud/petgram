@@ -1,14 +1,16 @@
-<html>
-<title> Petgram! 🐾</title>
-
-<head>
-    <link rel="stylesheet" href="frontend/static/site.css" />
-</head>
-
-<body>
-    <div id="feed">
-        Welcome {{username}}!
+{% extends "layout.html" %}
+{% block title %}
+Petgram! 🐾
+{% endblock %}
+{% block headcontent %}
+<form method="POST" action="/logout">
+    <div id="action">
+        <button type="submit">Log out</button>
     </div>
-</body>
-
-</html>
+</form>
+{% endblock %}
+{% block content %}
+<div id="feed">
+    Welcome {{username}} !
+</div>
+{% endblock %}

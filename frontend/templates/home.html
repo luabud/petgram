@@ -1,18 +1,13 @@
-<html>
-<title> Petgram! 🐾</title>
-
-<head>
-    <link rel="stylesheet" href="frontend/static/site.css" />
-</head>
-
-<body>
-    <div id="app">
-        <form method="POST" action="/auth/token/">
-            🐾 Username: <input type="text" name="username"></input>
-            🔐 Password: <input type="text" name="password"></input>
-            <button type="submit">Login</button>
-        </form>
-    </div>
-</body>
-
-</html>
+{% extends "layout.html" %}
+{% block title %}
+Petgram! 🐾
+{% endblock %}
+{% block content %}
+<div id="app">
+    <form method="POST" action="/auth/token/">
+        🐾 Username: <input type="text" name="username"></input>
+        🔐 Password: <input type="text" name="password"></input>
+        <button type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}
