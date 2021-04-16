@@ -1,0 +1,6 @@
+asyncpg<0.23.0,>=0.22.0
+databases[postgresql]<0.5.0,>=0.4.3
+fastapi<0.64.0,>=0.63.0
+psycopg2<3.0.0,>=2.8.6
+requests<3.0.0,>=2.25.1
+uvicorn<0.14.0,>=0.13.4

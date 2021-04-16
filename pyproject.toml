@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "petgram"
+version = "0.1.0"
+description = ""
+authors = ["luabud <luabud@microsoft.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+uvicorn = "^0.13.4"
+fastapi = "^0.63.0"
+requests = "^2.25.1"
+asyncpg = "^0.22.0"
+databases = {extras = ["postgresql"], version = "^0.4.3"}
+psycopg2 = "^2.8.6"
+fastapi-login = "^1.5.3"
+jinja2 = "^2.11.3"
+aiofiles = "^0.6.0"
+python-multipart = "^0.0.5"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = {version = "^20.8b1", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,20 @@
+body {
+    width:25%;
+    height: 50%;
+    position: relative;
+    display: block;
+    background-image:url("images/petgrambackground.jpg");
+    font-family:'Segoe UI';
+  }
+
+  input[type=text], select, textarea{
+    width: 100%;
+    padding: 2%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+    margin-top: 5px;
+    margin-bottom: 20px;
+
+  }
