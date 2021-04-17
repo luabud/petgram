@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
 {% block title %}
-Petgram! 🐾
+Petgram
 {% endblock %}
 {% block content %}
-<div id="app">
-    <form method="POST" action="/auth/token/">
-        🐾 Username: <input type="text" name="username"></input>
-        🔐 Password: <input type="text" name="password"></input>
-        <button type="submit">Login</button>
-    </form>
-</div>
+<form method="GET" action="/signup">
+    <button type="submit">Sign up</button>
+</form>
+<form method="GET" action="/login">
+    <button type="submit">Sign in</button>
+</form>
 {% endblock %}

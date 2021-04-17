@@ -17,9 +17,6 @@ templates = Jinja2Templates(directory="frontend/templates")
 router = APIRouter()
 
 
-access_token = "not set"
-
-
 def validate_credential(user, password):
     if not user:
         raise InvalidCredentialsException
@@ -58,11 +55,21 @@ async def create_user():
     pass
 
 
+@router.get("/login")
+def login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
 @router.post("/logout", status_code=201)
 def logout(request: Request, user=Depends(crud.manager)):
     response = RedirectResponse("/", status_code=302)
     response.delete_cookie(key=crud.manager.cookie_name)
     return response
+
+
+@router.get("/signup")
+def signup(request: Request):
+    return templates.TemplateResponse("signup.html", {"request": request})
 
 
 @router.get("/feed")
