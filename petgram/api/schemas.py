@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -22,14 +23,18 @@ from pydantic import BaseModel
 
 class UserBase(BaseModel):
     username: str
+    bio: str
+    name: str
 
 
 class UserCreate(UserBase):
     password: str
+    created_date: datetime
 
 
 class User(UserBase):
     id: int
+
     # is_active: bool
     # items: List[Item] = []
 

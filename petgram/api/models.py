@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, TIMESTAMP, Integer, String, DateTime
 
 # from sqlalchemy.orm import relationship
 
@@ -13,6 +13,7 @@ class User(Base):
     name = Column(String)
     bio = Column(String)
     hashed_password = Column(String)
+    created_date = Column(TIMESTAMP)
     # created_date = Column(DateTime, default=True)
 
     # items = relationship("Item", back_populates="owner")

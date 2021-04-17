@@ -4,8 +4,9 @@ Petgram
 {% endblock %}
 {% block content %}
 <div id="app">
-    <form method="POST" action="/auth/token/">
+    <form method="POST" action="/create">
         🐾 Username: <input type="text" name="username"></input>
+        📝 Bio: <input type="text" name="bio" </input>
         🔐 Password: <input type="text" name="password"></input>
         🔐 Retype password: <input type="text" name="retyped_password"></input>
         <button type="submit">Sign up</button>
