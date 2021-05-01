@@ -2,7 +2,6 @@
     "python.formatting.provider": "black",
     "editor.formatOnSave": true,
     "python.languageServer": "Pylance",
-    "python.pythonPath": "/home/vscode/.cache/pypoetry/virtualenvs/petgram-xS3fZVNL-py3.9/bin/python3.9",
     "python.linting.enabled": false,
     "python.testing.pytestArgs": [
         "tests"
