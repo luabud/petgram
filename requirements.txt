@@ -17,8 +17,8 @@ Jinja2==2.11.3
 makefun==1.11.3
 MarkupSafe==1.1.1
 passlib==1.7.4
-psycopg2==2.8.6
-psycopg2-binary==2.9.5
+psycopg2==2.9.6
+psycopg2-binary==2.9.6
 pydantic==1.10.7
 PyJWT==2.0.1
 python-multipart==0.0.5
