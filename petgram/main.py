@@ -3,7 +3,7 @@ from os import access
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 import petgram.db as db
-from petgram.api import home, ping, users
+from petgram.api import home, users
 
 
 app = FastAPI()
@@ -38,5 +38,4 @@ async def shutdown():
 # return response_object
 
 app.include_router(users.router)
-app.include_router(ping.router)
 app.include_router(home.router)

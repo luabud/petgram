@@ -1,2 +1,2 @@
-SELECT *
-FROM pg_catalog.pg_tables
+ALTER TABLE public.users
+ALTER COLUMN hashed_password TYPE VARCHAR(250);

@@ -17,10 +17,10 @@ users = Table(
     "users",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("username", String(50)),
+    Column("username", String(30)),
     Column("name", String(50)),
-    Column("bio", String(150)),
-    Column("hashed_password", String(50)),
+    Column("bio", String(250)),
+    Column("hashed_password", String(250)),
     Column("created_date", DateTime, default=func.now(), nullable=False),
 )
 

@@ -1,11 +1,5 @@
-Metadata-Version: 1.2
+Metadata-Version: 2.1
 Name: petgram
 Version: 0.1.0
-Summary: UNKNOWN
-Home-page: UNKNOWN
-Author: luabud
-Author-email: luabud@microsoft.com
-License: UNKNOWN
-Description: UNKNOWN
-Platform: UNKNOWN
-Requires-Python: >=3.8,<4.0
+Author-email: Luciana Abud <luabud@microsoft.com>
+License-File: LICENSE
