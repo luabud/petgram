@@ -12,7 +12,11 @@ app.mount("/frontend/static", StaticFiles(directory="frontend/static"))
 
 @app.on_event("startup")
 async def startup():
-    await db.database.connect()
+    try:
+        await db.database.connect()
+    except Exception as e:
+        print(f"Failed to connect to database: {e}")
+        app.state.db = None
 
 
 @app.on_event("shutdown")

@@ -12,5 +12,16 @@
     "esbonio.sphinx.confDir": "",
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
-    }
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Psotgres",
+            "database": "postgres",
+            "username": "postgres"
+        }
+    ]
 }
