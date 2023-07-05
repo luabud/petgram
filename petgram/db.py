@@ -1,5 +1,6 @@
 import os
 
+
 from databases import Database
 from sqlalchemy.sql import func
 from sqlalchemy import Table, Column, Integer, String, MetaData, DateTime, create_engine
@@ -23,7 +24,10 @@ users = Table(
     Column("hashed_password", String(250)),
     Column("created_date", DateTime, default=func.now(), nullable=False),
 )
-
-metadata.create_all(engine)
-# databases query builder
-database = Database(SQLALCHEMY_DATABASE_URI)
+try:
+    metadata.create_all(engine)
+    # databases query builder
+    database = Database(SQLALCHEMY_DATABASE_URI)
+except Exception as e:
+    print(f"Failed to create database: {e}")
+    database = None

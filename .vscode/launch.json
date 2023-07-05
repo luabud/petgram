@@ -11,12 +11,10 @@
             "module": "uvicorn",
             "args": [
                 "petgram.main:app",
-                "--reload",
-                "--workers",
-                "1"
+                "--reload"
             ],
             "jinja": true,
-            "justMyCode": false
+            "justMyCode": false,
         }
     ]
 }
