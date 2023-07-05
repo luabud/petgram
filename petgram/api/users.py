@@ -28,6 +28,10 @@ def validate_credential(user, password):
         raise InvalidCredentialsException
 
 
+def return_template(request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
 @router.get("/signup")
 def signup(request: Request):
     return templates.TemplateResponse("signup.html", {"request": request})
@@ -55,12 +59,12 @@ async def create_user(
     except:
         raise SignupFailedError
 
-    return templates.TemplateResponse("login.html", {"request": request})
+    return return_template(request)
 
 
 @router.get("/login")
 def login(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+    return return_template(request)
 
 
 @router.post("/auth/token")
