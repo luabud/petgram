@@ -12,7 +12,9 @@ Petgram
 {% elif request.query_params.error == "conflict" %}
 <p> User already exists.</p>
 {% elif request.query_params.error == "bad_request" %}
-<p> Failed to sign up </p>
+<p> Failed to sign up. </p>
+{% elif request.query_params.error == "unprocessable_entity" %}
+<p> Passwords don't match. </p>
 {% endif %}
 <div id="app">
     <form method="POST" action="/auth/token/">

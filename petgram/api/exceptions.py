@@ -7,6 +7,7 @@ ERROR_IDS = {
     404: "not_found",
     409: "conflict",
     303: "database_error",
+    422: "unprocessable_entity"    
 }
 
 
@@ -33,3 +34,8 @@ class UsernameTakenError(HTTPException):
 class DatabaseAccessException(HTTPException):
     def __init__(self):
         super().__init__(status_code=303, detail="Failed to access database.")
+
+
+class PasswordMismatchError(HTTPException):
+    def __init__(self):
+        super().__init__(status_code=422, detail="Passwords do not match.")

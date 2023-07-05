@@ -15,7 +15,6 @@
             ],
             "jinja": true,
             "justMyCode": false,
-            "stopOnEntry": true
         }
     ]
 }

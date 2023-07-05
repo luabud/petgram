@@ -17,17 +17,7 @@ session = db.SessionLocal()
 
 @manager.user_loader
 def load_user(username: str):  # could also be an asynchronous function
-    try:
-        session_query = (
-            session.query(models.User).filter(models.User.username == username).first()
-        )
-        if session_query is None:
-            raise InvalidCredentialsException
-    except Exception as e:
-        print(f"Failed to access database when loading user: {e}")
-        raise DatabaseAccessException
-    return session_query
-
+    return session.query(models.User).filter(models.User.username == username).first()
 
 def create_user(username: str, password: str, bio: str):
     hashed_password = security.hash_password(password)
