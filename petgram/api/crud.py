@@ -5,6 +5,7 @@ from . import schemas
 from . import models
 from . import security
 from fastapi_login import LoginManager
+from .exceptions import InvalidCredentialsException, DatabaseAccessException
 import os
 from .. import db
 
@@ -16,15 +17,31 @@ session = db.SessionLocal()
 
 @manager.user_loader
 def load_user(username: str):  # could also be an asynchronous function
-    return session.query(models.User).filter(models.User.username == username).first()
+    try:
+        session_query = (
+            session.query(models.User).filter(models.User.username == username).first()
+        )
+        if session_query is None:
+            raise InvalidCredentialsException
+    except Exception as e:
+        print(f"Failed to access database when loading user: {e}")
+        raise DatabaseAccessException
+    return session_query
 
 
 def create_user(username: str, password: str, bio: str):
     hashed_password = security.hash_password(password)
-    db_user = models.User(
-        username=username, hashed_password=hashed_password, bio=bio, created_date=now()
-    )
-    session.add(db_user)
-    session.commit()
-    session.refresh(db_user)
-    return db_user
+    try:
+        db_user = models.User(
+            username=username,
+            hashed_password=hashed_password,
+            bio=bio,
+            created_date=now(),
+        )
+        session.add(db_user)
+        session.commit()
+        session.refresh(db_user)
+        return db_user
+    except Exception as e:
+        print(f"Failed to access database when creating user: {e}")
+        return None

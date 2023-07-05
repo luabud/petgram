@@ -6,11 +6,12 @@ Petgram
 <div id="app">
     <form method="POST" action="/create">
         🐾 Username: <input type="text" name="username"></input>
-        📝 Bio: <input type="text" name="bio" </input>
+        📝 Bio: <input type="text" name="bio"></input>
 
-        🔐 Password: <input type="password" name="password"></input>
+        🔐 Password: <input type="password" id="password" name="password" required>
 
-        🔐 Retype password: <input type="password" name="retyped_password"></input>
+        🔐 Retype password: <input type="password" id="retyped_password" name="retyped_password" required>
+
         <button type="submit">Sign up</button>
     </form>
 </div>

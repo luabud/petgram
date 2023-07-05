@@ -2,6 +2,9 @@
 {% block title %}
 Petgram
 {% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
 {% block content %}
 <form method="GET" action="/signup">
     <button type="submit">Sign up</button>

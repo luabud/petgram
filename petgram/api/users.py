@@ -2,6 +2,8 @@ from starlette.responses import RedirectResponse, Response
 from petgram.api import crud
 from fastapi import Depends, status, Request, Form
 from fastapi import APIRouter, HTTPException
+
+from petgram.api.exceptions import InvalidCredentialsException
 from . import security
 from . import crud
 from datetime import timedelta
@@ -16,9 +18,7 @@ router = APIRouter()
 
 
 def validate_credential(user, password):
-    if not user:
-        raise InvalidCredentialsException
-    elif not security.is_same_password(password, user.hashed_password):
+    if not user or not security.is_same_password(password, user.hashed_password):
         raise InvalidCredentialsException
 
 
@@ -35,16 +35,22 @@ async def create_user(
     retyped_password: str = Form(...),
     bio: str = Form(...),
 ):
+    db_user = crud.load_user(username=username)
 
-    db_user = crud.load_user(username=username)  # type: ignore
     if db_user:
-        raise HTTPException(status_code=400, detail="Username already registered.")
+        raise HTTPException(
+            status_code=400,
+            detail="Username already registered.",
+        )
     elif not security.is_same_password(
         password, security.hash_password(retyped_password)
     ):
         raise HTTPException(status_code=400, detail="Passwords don't match.")
 
-    user = crud.create_user(username, password, bio)
+    try:
+        user = await crud.create_user(username, password, bio)
+    except:
+        raise HTTPException(status_code=404, detail="Failed to sign up.")
 
     return templates.TemplateResponse("login.html", {"request": request})
 
@@ -62,6 +68,7 @@ def login_auth(response: Response, data: OAuth2PasswordRequestForm = Depends()):
     potential_user = crud.load_user(username)  # type: ignore
 
     validate_credential(potential_user, password)
+
     access_token = crud.manager.create_access_token(
         data=dict(sub=username), expires=timedelta(hours=6)
     )
