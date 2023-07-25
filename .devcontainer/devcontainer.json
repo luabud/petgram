@@ -16,6 +16,7 @@
 					}
 				},
 				"terminal.integrated.defaultProfile.linux": "bash",
+				"python.analysis.enableJinjaSupport": true,
 				"sqltools.connections": [
 					{
 						"name": "Container database",
