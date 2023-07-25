@@ -1,5 +1,5 @@
 from starlette.responses import RedirectResponse, Response
-from petgram.api import crud
+from petgram.api import crud, models
 from fastapi import Depends, status, Request, Form
 from fastapi import APIRouter
 
@@ -97,14 +97,14 @@ def login_auth(response: Response, data: OAuth2PasswordRequestForm = Depends()):
 
 
 @router.get("/feed")
-def display_feed(request: Request, user=Depends(crud.manager)):
+def display_feed(request: Request, user: models.User = Depends(crud.manager)):
     return templates.TemplateResponse(
         "feed.html", {"request": request, "username": user.username}
     )
 
 
 @router.post("/logout", status_code=201)
-def logout(request: Request, user=Depends(crud.manager)):
+def logout(request: Request, user: models.User = Depends(crud.manager)):
     response = RedirectResponse("/", status_code=302)
     response.delete_cookie(key=crud.manager.cookie_name)
     return response
