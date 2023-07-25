@@ -1,20 +1,36 @@
 body {
-    width:25%;
-    height: 50%;
-    position: relative;
-    display: block;
-    background-image:url("images/petgrambackground.jpg");
-    font-family:'Segoe UI';
-  }
+  width: 25%;
+  height: 50%;
+  position: relative;
+  display: block;
+  background-image: url("images/petgrambackground.jpg");
+  font-family: 'Segoe UI';
+}
 
-  input[type=text], input[type=password], select, textarea{
-    width: 95%;
-    padding: 2%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    resize: vertical;
-    margin-top: 5px;
-    margin-bottom: 20px;
+input[type=text],
+input[type=password],
+select,
+textarea {
+  width: 95%;
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+  margin-top: 5px;
+  margin-bottom: 20px;
 
-  }
+}
+
+h1 {
+  font-size: 36px;
+  color: #333;
+  margin-top: 50px;
+  text-align: center;
+}
+
+p {
+  font-size: 18px;
+  color: #c20b0b;
+  text-align: center;
+}

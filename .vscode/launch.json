@@ -14,8 +14,7 @@
                 "--reload"
             ],
             "jinja": true,
-            "justMyCode": true,
-            "stopOnEntry": true
+            "justMyCode": false,
         }
     ]
 }
