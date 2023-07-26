@@ -3,19 +3,6 @@
 Petgram
 {% endblock %}
 {% block content %}
-{% if request.query_params.error == "invalid_credentials" %}
-<p>Invalid username or password.</p>
-{% elif request.query_params.error == "database_error" %}
-<p> Failed to connect to database.</p>
-{% elif request.query_params.error == "not_found" %}
-<p> User not found.</p>
-{% elif request.query_params.error == "conflict" %}
-<p> User already exists.</p>
-{% elif request.query_params.error == "bad_request" %}
-<p> Failed to sign up. </p>
-{% elif request.query_params.error == "unprocessable_entity" %}
-<p> Passwords don't match. </p>
-{% endif %}
 <div id="app">
     <form method="POST" action="/auth/token/">
         🐾 Username: <input type="text" name="username"></input>
