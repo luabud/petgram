@@ -30,13 +30,9 @@ class SignupError(StrEnum):
     UserCreationFailed = "UserCreationFailed"
 
 
-def validate_credential(user, password):
-    if not user or not security.is_same_password(password, user.hashed_password):
-        raise InvalidCredentialsException
-
-
-def return_template(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+class LoginError(StrEnum):
+    DatabaseError = "DatabaseError"
+    InvalidUserNameOrPassword = "InvalidUserNameOrPassword"
 
 
 @router.get("/signup")
@@ -72,27 +68,30 @@ async def create_user(
         return signup(request, error)
     else:
         # User created successfully, prompt them to login
-        return return_template(request)
+        return login(request)
 
 
 @router.get("/login")
-def login(request: Request):
-    return return_template(request)
+def login(request: Request, error: LoginError | None = None):
+    return templates.TemplateResponse("login.html", {"request": request, "error": error})
 
 
-@router.post("/auth/token")
-def login_auth(response: Response, data: OAuth2PasswordRequestForm = Depends()):
+@router.post("/auth")
+def login_auth(request: Request, data: OAuth2PasswordRequestForm = Depends()):
     username = data.username
     password = data.password
+
+    error = None
     try:
         potential_user = crud.load_user(username)  # type: ignore
     except:
-        raise DatabaseAccessException
+        error = LoginError.DatabaseError
 
-    if not potential_user:
-        raise InvalidCredentialsException
+    if not potential_user or not security.is_same_password(password, potential_user.hashed_password):
+        error = LoginError.InvalidUserNameOrPassword
 
-    validate_credential(potential_user, password)
+    if error:
+        return login(request, error)
 
     access_token = crud.manager.create_access_token(
         data=dict(sub=username), expires=timedelta(hours=6)

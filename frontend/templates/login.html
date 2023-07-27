@@ -3,8 +3,13 @@
 Petgram
 {% endblock %}
 {% block content %}
+{% if error == "InvalidUserNameOrPassword" %}
+<p> Invalid username or password.</p>
+{% elif error == "DatabaseError" %}
+<p> Failed to connect to database.</p>
+{% endif %}
 <div id="app">
-    <form method="POST" action="/auth/token/">
+    <form method="POST" action="/auth/">
         🐾 Username: <input type="text" name="username"></input>
         🔐 Password: <input type="password" name="password"></input>
         <button type="submit">Log in</button>
