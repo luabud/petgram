@@ -2,6 +2,7 @@ from starlette.responses import RedirectResponse, Response
 from petgram.api import crud, models
 from fastapi import Depends, status, Request, Form
 from fastapi import APIRouter
+from enum import StrEnum
 
 from petgram.api.exceptions import (
     InvalidCredentialsException,
@@ -23,18 +24,20 @@ templates = Jinja2Templates(directory="frontend/templates")
 router = APIRouter()
 
 
-def validate_credential(user, password):
-    if not user or not security.is_same_password(password, user.hashed_password):
-        raise InvalidCredentialsException
+class SignupError(StrEnum):
+    UserAlreadyExists = "UserAlreadyExists"
+    PasswordsDoNotMatch = "PasswordsDoNotMatch"
+    UserCreationFailed = "UserCreationFailed"
 
 
-def return_template(request):
-    return templates.TemplateResponse("login.html", {"request": request})
+class LoginError(StrEnum):
+    DatabaseError = "DatabaseError"
+    InvalidUserNameOrPassword = "InvalidUserNameOrPassword"
 
 
 @router.get("/signup")
-def signup(request: Request):
-    return templates.TemplateResponse("signup.html", {"request": request})
+def signup(request: Request, error: SignupError | None = None):
+    return templates.TemplateResponse("signup.html", {"request": request, "error": error})
 
 
 @router.post("/create", status_code=201)
@@ -47,39 +50,48 @@ async def create_user(
 ):
     db_user = crud.load_user(username=username)
 
+    error = None
     if db_user:
-        raise UsernameTakenError
-    if not security.is_same_password(
+        error = SignupError.UserAlreadyExists
+    elif not security.is_same_password(
         password, security.hash_password(retyped_password)
     ):
-        raise PasswordMismatchError
+        error = SignupError.PasswordsDoNotMatch
+    else:
+        try:
+            user = crud.create_user(username, password, bio)
+        except:
+            error = SignupError.UserCreationFailed
 
-    try:
-        user = crud.create_user(username, password, bio)
-    except:
-        raise SignupFailedError
-
-    return return_template(request)
+    if error:
+        # Display error and allow user to try again
+        return signup(request, error)
+    else:
+        # User created successfully, prompt them to login
+        return login(request)
 
 
 @router.get("/login")
-def login(request: Request):
-    return return_template(request)
+def login(request: Request, error: LoginError | None = None):
+    return templates.TemplateResponse("login.html", {"request": request, "error": error})
 
 
-@router.post("/auth/token")
-def login_auth(response: Response, data: OAuth2PasswordRequestForm = Depends()):
+@router.post("/auth")
+def login_auth(request: Request, data: OAuth2PasswordRequestForm = Depends()):
     username = data.username
     password = data.password
+
+    error = None
     try:
         potential_user = crud.load_user(username)  # type: ignore
     except:
-        raise DatabaseAccessException
+        error = LoginError.DatabaseError
 
-    if not potential_user:
-        raise InvalidCredentialsException
+    if not potential_user or not security.is_same_password(password, potential_user.hashed_password):
+        error = LoginError.InvalidUserNameOrPassword
 
-    validate_credential(potential_user, password)
+    if error:
+        return login(request, error)
 
     access_token = crud.manager.create_access_token(
         data=dict(sub=username), expires=timedelta(hours=6)
@@ -99,7 +111,7 @@ def login_auth(response: Response, data: OAuth2PasswordRequestForm = Depends()):
 @router.get("/feed")
 def display_feed(request: Request, user: models.User = Depends(crud.manager)):
     return templates.TemplateResponse(
-        "feed.html", {"request": request, "username": user.username}
+        "feed.html", {"request": request, "username": str(user.username)}
     )
 
 

@@ -3,6 +3,13 @@
 Petgram
 {% endblock %}
 {% block content %}
+{% if error == "UserAlreadyExists" %}
+<p> User already exists.</p>
+{% elif error == "UserCreationFailed" %}
+<p> Failed to sign up. </p>
+{% elif error == "PasswordsDoNotMatch" %}
+<p> Passwords don't match. </p>
+{% endif %}
 <div id="app">
     <form method="POST" action="/create">
         🐾 Username: <input type="text" name="username"></input>
